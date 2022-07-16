@@ -5,9 +5,11 @@
   "repository": {
     "url": "https://github.com/jb55/ln-ws-proxy"
   },
-  "main": "index.js",
   "scripts": {
     "test": "tap test/*.js"
+  },
+  "bin": {
+    "ln-ws-proxy": "ln-ws-proxy"
   },
   "dependencies": {
     "ws": "^8.8.1"
