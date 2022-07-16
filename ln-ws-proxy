@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+const make_server = require('./')
+
+const server = make_server()
