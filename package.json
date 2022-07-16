@@ -13,8 +13,5 @@
   },
   "dependencies": {
     "ws": "^8.8.1"
-  },
-  "devDependencies": {
-    "tap": "~0.2.5"
   }
 }
