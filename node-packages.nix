@@ -4,13 +4,40 @@
 
 let
   sources = {
-    "ws-8.8.1" = {
+    "bufferutil-4.0.8" = {
+      name = "bufferutil";
+      packageName = "bufferutil";
+      version = "4.0.8";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/bufferutil/-/bufferutil-4.0.8.tgz";
+        sha512 = "4T53u4PdgsXqKaIctwF8ifXlRTTmEPJ8iEPWFdGZvcf7sbwYo6FKFEX9eNNAnzFZ7EzJAQ3CJeOtCRA4rDp7Pw==";
+      };
+    };
+    "node-gyp-build-4.8.1" = {
+      name = "node-gyp-build";
+      packageName = "node-gyp-build";
+      version = "4.8.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.8.1.tgz";
+        sha512 = "OSs33Z9yWr148JZcbZd5WiAXhh/n9z8TxQcdMhIOlpN9AhWpLfvVFO73+m77bBABQMaY9XSvIa+qk0jlI7Gcaw==";
+      };
+    };
+    "utf-8-validate-6.0.4" = {
+      name = "utf-8-validate";
+      packageName = "utf-8-validate";
+      version = "6.0.4";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/utf-8-validate/-/utf-8-validate-6.0.4.tgz";
+        sha512 = "xu9GQDeFp+eZ6LnCywXN/zBancWvOpUMzgjLPSjy4BRHSmTelvn2E0DG0o1sTiw5hkCKBHo8rwSKncfRfv2EEQ==";
+      };
+    };
+    "ws-8.18.0" = {
       name = "ws";
       packageName = "ws";
-      version = "8.8.1";
+      version = "8.18.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ws/-/ws-8.8.1.tgz";
-        sha512 = "bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==";
+        url = "https://registry.npmjs.org/ws/-/ws-8.18.0.tgz";
+        sha512 = "8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==";
       };
     };
   };
@@ -20,7 +47,10 @@ let
     version = "0.1.0";
     src = ./.;
     dependencies = [
-      sources."ws-8.8.1"
+      sources."bufferutil-4.0.8"
+      sources."node-gyp-build-4.8.1"
+      sources."utf-8-validate-6.0.4"
+      sources."ws-8.18.0"
     ];
     buildInputs = globalBuildInputs;
     meta = {
@@ -28,7 +58,7 @@ let
     };
     production = true;
     bypassCache = true;
-    reconstructLock = false;
+    reconstructLock = true;
   };
 in
 {

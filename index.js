@@ -27,43 +27,47 @@ function parse_ip(str)
 }
 
 async function handle_connection(ws, req) {
-	const url = new URL(`wss://${req.headers.host}${req.url}`)
-	const dest = url.pathname.substring(1)
-	if (!dest) {
-		ws.close()
-		return
-	}
-
-	const {host, port} = parse_ip(dest)
-	console.log("serving", host, port)
-	const is_resolved = false
 	let socket = null
-
-	const connected = new Promise((resolve, reject) => {
-		const conn = net.createConnection(port, host, () => {
-			socket = conn
-			resolve(conn)
-		})
-	});
-
-	let messages = []
-	ws.on('message', async (msg) => {
-		if (socket) {
-			socket.write(msg)
-			return 
+	try {
+		const url = new URL(`wss://${req.headers.host}${req.url}`)
+		const dest = url.pathname.substring(1)
+		if (!dest) {
+			ws.close()
+			return
 		}
 
-		messages.push(msg)
-	})
+		const {host, port} = parse_ip(dest)
+		console.log("serving", host, port)
+		const is_resolved = false
 
-	// queue up messages until we're connected
-	socket = await connected
-	socket.on('data', (d) => ws.send(d))
+		const connected = new Promise((resolve, reject) => {
+			const conn = net.createConnection(port, host, () => {
+				socket = conn
+				resolve(conn)
+			})
+		});
 
-	for (const message of messages) {
-		socket.write(message)
+		let messages = []
+		ws.on('message', async (msg) => {
+			if (socket) {
+				socket.write(msg)
+				return 
+			}
+
+			messages.push(msg)
+		})
+
+		// queue up messages until we're connected
+		socket = await connected
+		socket.on('data', (d) => ws.send(d))
+
+		for (const message of messages) {
+			socket.write(message)
+		}
+		messages = null
+	} catch (e) {
+		console.error("error: ", e)
 	}
-	messages = null
 }
 
 module.exports = ln_ws_proxy_server
